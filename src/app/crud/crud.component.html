@@ -1,0 +1,17 @@
+<p>crud works!</p>
+
+
+<input [(ngModel)]="newItem" type="text" placeholder="Nuevo Item">
+<button (click)="addItem()">Add</button>
+
+<ul>
+    <li *ngFor="let item of items; let i = index" >
+        {{item.id}} - {{ item.name }} - {{ i }}
+        <button (click)="findItem(i)" >Editar</button>
+        <button (click)="deleteItem(i)">Borrar</button>
+    </li>
+</ul>
+
+<div *ngIf="editingIndex !== null">
+    <input [(ngModel)]="editingItem" placeholder="Editar item">
+</div>
