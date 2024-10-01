@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
 
 interface Item {
   id: number;
@@ -12,8 +13,9 @@ interface Item {
 })
 
 
-export class CrudComponent {
+export class CrudComponent implements OnInit {
   saludo:string = 'HOla';
+  data:any[] = [];
   newItem:string = '';
   editingIndex: number | null = null;
   editingItem: string = '';
@@ -22,6 +24,24 @@ export class CrudComponent {
     {id:1,name:"Item 1"},
     {id:2,name:"Item 2"}
   ]
+
+  constructor(private apiService:ApiService) {}
+
+  ngOnInit() {
+    this.apiService.getDatos().subscribe(
+      (response) => {
+        this.data = response;
+        console.log(this.data);
+      },
+      (error) => {
+        console.error('Error in data collection');
+      }
+    );
+  }
+
+  onEnter() {
+    this.addItem();
+  }
 
   async addItem(){
     if (this.newItem.trim()) {
@@ -33,12 +53,20 @@ export class CrudComponent {
 
   async editItem(){
     console.log("edit");
-    
+    if (this.editingIndex !== null && this.editingItem.trim()) {
+      this.items[this.editingIndex].name = this.editingItem;
+      this.editingIndex = null
+      this.editingItem = '';
+    }
+  }
+
+  onEnterEdit(){
+    this.editItem()
   }
 
   async deleteItem(index:number){
     console.log("delete");
-    
+    this.items.splice(index,1);
   }
 
   async findItem(index:number){

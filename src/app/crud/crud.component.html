@@ -1,7 +1,7 @@
 <p>crud works!</p>
 
 
-<input [(ngModel)]="newItem" type="text" placeholder="Nuevo Item">
+<input [(ngModel)]="newItem" type="text" placeholder="Nuevo Item" (keydown.enter)="onEnter()">
 <button (click)="addItem()">Add</button>
 
 <ul>
@@ -13,5 +13,6 @@
 </ul>
 
 <div *ngIf="editingIndex !== null">
-    <input [(ngModel)]="editingItem" placeholder="Editar item">
+    <input [(ngModel)]="editingItem" placeholder="Editar item" (keydown.enter)="onEnterEdit()">
+    <button (click)="editItem()" >Save</button>
 </div>
