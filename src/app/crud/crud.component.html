@@ -1,15 +1,20 @@
 <p>crud works!</p>
 
-
+<input type="text" placeholder="Full name" required>
+<input type="tel" placeholder="phone" required>
+<input type="email" placeholder="mail" required>
 <input [(ngModel)]="newItem" type="text" placeholder="Nuevo Item" (keydown.enter)="onEnter()">
 <button (click)="addItem()">Add</button>
 
 <ul>
-    <li *ngFor="let item of items; let i = index" >
-        {{item.id}} - {{ item.name }} - {{ i }}
-        <button (click)="findItem(i)" >Editar</button>
-        <button (click)="deleteItem(i)">Borrar</button>
-    </li>
+    <!-- <button (click)="findItem(i)" >Editar</button>
+    <button (click)="deleteItem(i)">Borrar</button> -->
+
+    @for (item of data; track item.full_name) {
+        <li>{{ item.full_name }}</li>
+    } @empty {
+        <li>There are no users.</li>
+    }
 </ul>
 
 <div *ngIf="editingIndex !== null">

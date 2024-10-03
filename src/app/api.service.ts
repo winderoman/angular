@@ -6,11 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+  private apiUrl = 'https://nestjs-8vfv.onrender.com/users';
 
   constructor(private http:HttpClient) { }
 
-  getDatos():Observable<any>{
+  getDataUsers():Observable<any>{
     return this.http.get(this.apiUrl);
   }
+
+  createUser(postData:any):Observable<any>{
+    return this.http.post(this.apiUrl,postData);
+  }
+
+
 }

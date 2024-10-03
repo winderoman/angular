@@ -25,16 +25,20 @@ export class CrudComponent implements OnInit {
     {id:2,name:"Item 2"}
   ]
 
+  newPost = {
+    full_name: 'tyga',
+    mail: 'tyga@pepe.co',
+    phone: '3215459631',
+  };
+  response: any;
+
   constructor(private apiService:ApiService) {}
 
   ngOnInit() {
-    this.apiService.getDatos().subscribe(
+    this.apiService.getDataUsers().subscribe(
       (response) => {
         this.data = response;
         console.log(this.data);
-      },
-      (error) => {
-        console.error('Error in data collection');
       }
     );
   }
@@ -44,34 +48,29 @@ export class CrudComponent implements OnInit {
   }
 
   async addItem(){
-    if (this.newItem.trim()) {
-      const newId = Math.max(...this.items.map(item => item.id), 0) + 1;
-      this.items.push({id:newId,name:this.newItem.trim()});
-      this.newItem = '';
-    }
+    this.apiService.createUser(this.newPost).subscribe((res) => {
+      this.response = res;
+      console.log(this.response);
+      
+    });
+
+    
   }
 
   async editItem(){
     console.log("edit");
-    if (this.editingIndex !== null && this.editingItem.trim()) {
-      this.items[this.editingIndex].name = this.editingItem;
-      this.editingIndex = null
-      this.editingItem = '';
-    }
   }
 
   onEnterEdit(){
     this.editItem()
   }
 
-  async deleteItem(index:number){
-    console.log("delete");
-    this.items.splice(index,1);
+  async deleteItem(id:number){
+
   }
 
-  async findItem(index:number){
-    this.editingIndex = index;
-    this.editingItem = this.items[index].name;
+  async findItem(id:number){
+
   }
 
 
