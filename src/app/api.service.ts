@@ -18,5 +18,12 @@ export class ApiService {
     return this.http.post(this.apiUrl,postData);
   }
 
+  deleteUser(id_user:string):Observable<any>{
+    return this.http.delete(`${this.apiUrl}/${id_user}`);
+  }
+
+  updateUser(id_user:string | null,dataUser:any):Observable<any>{
+    return this.http.put(`${this.apiUrl}/${id_user}`,dataUser);
+  }
 
 }

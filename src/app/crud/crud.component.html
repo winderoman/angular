@@ -1,23 +1,26 @@
 <p>crud works!</p>
 
-<input type="text" placeholder="Full name" required>
-<input type="tel" placeholder="phone" required>
-<input type="email" placeholder="mail" required>
-<input [(ngModel)]="newItem" type="text" placeholder="Nuevo Item" (keydown.enter)="onEnter()">
+<input #fullNameInput [(ngModel)]="full_name" type="text" placeholder="Full name" required>
+<input [(ngModel)]="phone" type="tel" placeholder="phone" required>
+<input [(ngModel)]="mail" type="email" placeholder="mail" required (keydown.enter)="onEnter()">
 <button (click)="addItem()">Add</button>
 
 <ul>
-    <!-- <button (click)="findItem(i)" >Editar</button>
-    <button (click)="deleteItem(i)">Borrar</button> -->
+    
+    @for (item of data; track item.full_name ) {
+        <li>
+            {{ item.full_name }} - {{item.mail}}
+            <button (click)="findItem(item.id_user)" >Edit</button>
+            <button (click)="deleteItem(item.id_user)">Delete</button> 
+        </li>
 
-    @for (item of data; track item.full_name) {
-        <li>{{ item.full_name }}</li>
     } @empty {
         <li>There are no users.</li>
     }
 </ul>
 
 <div *ngIf="editingIndex !== null">
-    <input [(ngModel)]="editingItem" placeholder="Editar item" (keydown.enter)="onEnterEdit()">
-    <button (click)="editItem()" >Save</button>
+    <input [(ngModel)]="editingPhone" placeholder="update phone">
+    <input [(ngModel)]="editingMail" placeholder="update mail" (keydown.enter)="onEnterEdit()">
+    <button (click)="editItem()">Save</button>
 </div>
